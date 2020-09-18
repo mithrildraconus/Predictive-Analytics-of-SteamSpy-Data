@@ -1,0 +1,764 @@
+---
+title: "DSC630 Term Project"
+author: "A. Kendell Davis"
+date: "8/10/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width = 12, fig.height = 12)
+library(coefplot)
+library(useful)
+library(ggplot2)
+memory.limit(size = 16384)
+options(max.print=1000000)
+```
+```{r}
+SteamSpyLMPositive <- lm(positive ~ publisher + owners + median_forever + initialprice + discount, data = `SteamSpy.Data.7.2.20.(prepped)`)
+summary(SteamSpyLMPositive)
+```
+
+```{r}
+SteamSpyLMNegative <- lm(negative ~ publisher + owners + median_forever + initialprice + discount, data = `SteamSpy.Data.7.2.20.(prepped)`)
+summary(SteamSpyLMNegative)
+```
+
+```{r}
+SteamSpyLMPositivePubOwn <- lm(positive ~ publisher * owners + median_forever + initialprice + discount, data = `SteamSpy.Data.7.2.20.(prepped)`)
+summary(SteamSpyLMPositivePubOwn)
+```
+
+```{r}
+SteamSpyLMNegativePubOwn <- lm(negative ~ publisher * owners + median_forever + initialprice + discount, data = `SteamSpy.Data.7.2.20.(prepped)`)
+summary(SteamSpyLMNegativePubOwn)
+```
+
+```{r}
+SteamSpyLMPositivePriceDisc <- lm(positive ~ publisher + owners + median_forever + initialprice * discount, data = `SteamSpy.Data.7.2.20.(prepped)`)
+summary(SteamSpyLMPositivePriceDisc)
+```
+
+```{r}
+SteamSpyLMNegativePriceDisc <- lm(negative ~ publisher + owners + median_forever + initialprice * discount, data = `SteamSpy.Data.7.2.20.(prepped)`)
+summary(SteamSpyLMNegativePriceDisc)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlay <- lm(positive ~ publisher + owners * median_forever + initialprice + discount, data = `SteamSpy.Data.7.2.20.(prepped)`)
+summary(SteamSpyLMPositiveOwnPlay)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlay <- lm(negative ~ publisher + owners * median_forever + initialprice + discount, data = `SteamSpy.Data.7.2.20.(prepped)`)
+summary(SteamSpyLMNegativeOwnPlay)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlayPub <- lm(positive ~ publisher * owners * median_forever + initialprice + discount, data = `SteamSpy.Data.7.2.20.(prepped)`)
+summary(SteamSpyLMPositiveOwnPlayPub)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlayPub <- lm(negative ~ publisher * owners * median_forever + initialprice + discount, data = `SteamSpy.Data.7.2.20.(prepped)`)
+summary(SteamSpyLMNegativeOwnPlayPub)
+```
+
+```{r}
+SteamSpyGLMPositive <- glm(positive ~ publisher + owners + median_forever + initialprice + discount, data = `SteamSpy.Data.7.2.20.(prepped)`, family = poisson(link = "log"))
+summary(SteamSpyGLMPositive)
+```
+
+```{r}
+SteamSpyGLMPositivePubOwn <- glm(positive ~ publisher * owners + median_forever + initialprice + discount, data = `SteamSpy.Data.7.2.20.(prepped)`, family = poisson(link = "log"))
+summary(SteamSpyGLMPositivePubOwn)
+```
+
+```{r}
+SteamSpyGLMPositivePriceDisc <- glm(positive ~ publisher + owners + median_forever + initialprice * discount, data = `SteamSpy.Data.7.2.20.(prepped)`, family = poisson(link = "log"))
+summary(SteamSpyGLMPositivePriceDisc)
+```
+
+```{r}
+SteamSpyGLMPositiveOwnPlay <- glm(positive ~ publisher + owners * median_forever + initialprice + discount, data = `SteamSpy.Data.7.2.20.(prepped)`, family = poisson(link = "log"))
+summary(SteamSpyGLMPositiveOwnPlay)
+```
+
+```{r}
+SteamSpyGLMNegativeOwnPlay <- glm(negative ~ publisher + owners * median_forever + initialprice + discount, data = `SteamSpy.Data.7.2.20.(prepped)`, family = poisson(link = "log"))
+summary(SteamSpyGLMNegativeOwnPlay)
+```
+
+```{r}
+SteamSpyLMPositive71320 <- predict(SteamSpyLMPositive, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositive71320)
+```
+
+```{r}
+SteamSpyLMNegative71320 <- predict(SteamSpyLMNegative, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegative71320)
+```
+
+```{r}
+SteamSpyLMPositivePubOwn71320 <- predict(SteamSpyLMPositivePubOwn, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositivePubOwn71320)
+```
+
+```{r}
+SteamSpyLMNegativePubOwn71320 <- predict(SteamSpyLMNegativePubOwn, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativePubOwn71320)
+```
+
+```{r}
+SteamSpyLMPositivePriceDisc71320 <- predict(SteamSpyLMPositivePriceDisc, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositivePriceDisc71320)
+```
+
+```{r}
+SteamSpyLMNegativePriceDisc71320 <- predict(SteamSpyLMNegativePriceDisc, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativePriceDisc71320)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlay71320 <- predict(SteamSpyLMPositiveOwnPlay, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositiveOwnPlay71320)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlay71320 <- predict(SteamSpyLMNegativeOwnPlay, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativeOwnPlay71320)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlayPub71320 <- predict(SteamSpyLMPositiveOwnPlayPub, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositiveOwnPlayPub71320)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlayPub71320 <- predict(SteamSpyLMNegativeOwnPlayPub, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativeOwnPlayPub71320)
+```
+
+```{r}
+SteamSpyGLMPositive71320 <- predict(SteamSpyGLMPositive, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositive71320)
+```
+
+```{r}
+SteamSpyGLMPositivePubOwn71320 <- predict(SteamSpyGLMPositivePubOwn, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositivePubOwn71320)
+```
+
+```{r}
+SteamSpyGLMPositivePriceDisc71320 <- predict(SteamSpyGLMPositivePriceDisc, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositivePriceDisc71320)
+```
+
+```{r}
+SteamSpyGLMPositiveOwnPlay71320 <- predict(SteamSpyGLMPositiveOwnPlay, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositiveOwnPlay71320)
+```
+
+```{r}
+SteamSpyGLMNegativeOwnPlay71320 <- predict(SteamSpyGLMNegativeOwnPlay, newdata = `SteamSpy.Data.7.13.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMNegativeOwnPlay71320)
+```
+
+```{r}
+SteamSpyLMPositive71420 <- predict(SteamSpyLMPositive, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositive71420)
+```
+
+```{r}
+SteamSpyLMNegative71420 <- predict(SteamSpyLMNegative, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegative71420)
+```
+
+```{r}
+SteamSpyLMPositivePubOwn71420 <- predict(SteamSpyLMPositivePubOwn, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositivePubOwn71420)
+```
+
+```{r}
+SteamSpyLMNegativePubOwn71420 <- predict(SteamSpyLMNegativePubOwn, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativePubOwn71420)
+```
+
+```{r}
+SteamSpyLMPositivePriceDisc71420 <- predict(SteamSpyLMPositivePriceDisc, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositivePriceDisc71420)
+```
+
+```{r}
+SteamSpyLMNegativePriceDisc71420 <- predict(SteamSpyLMNegativePriceDisc, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativePriceDisc71420)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlay71420 <- predict(SteamSpyLMPositiveOwnPlay, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositiveOwnPlay71420)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlay71420 <- predict(SteamSpyLMNegativeOwnPlay, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativeOwnPlay71420)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlayPub71420 <- predict(SteamSpyLMPositiveOwnPlayPub, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositiveOwnPlayPub71420)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlayPub71420 <- predict(SteamSpyLMNegativeOwnPlayPub, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativeOwnPlayPub71420)
+```
+
+```{r}
+SteamSpyGLMPositive71420 <- predict(SteamSpyGLMPositive, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositive71420)
+```
+
+```{r}
+SteamSpyGLMPositivePubOwn71420 <- predict(SteamSpyGLMPositivePubOwn, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositivePubOwn71420)
+```
+
+```{r}
+SteamSpyGLMPositivePriceDisc71420 <- predict(SteamSpyGLMPositivePriceDisc, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositivePriceDisc71420)
+```
+
+```{r}
+SteamSpyGLMPositiveOwnPlay71420 <- predict(SteamSpyGLMPositiveOwnPlay, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositiveOwnPlay71420)
+```
+
+```{r}
+SteamSpyGLMNegativeOwnPlay71420 <- predict(SteamSpyGLMNegativeOwnPlay, newdata = `SteamSpy.Data.7.14.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMNegativeOwnPlay71420)
+```
+
+```{r}
+SteamSpyLMPositive71520 <- predict(SteamSpyLMPositive, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositive71520)
+```
+
+```{r}
+SteamSpyLMNegative71520 <- predict(SteamSpyLMNegative, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegative71520)
+```
+
+```{r}
+SteamSpyLMPositivePubOwn71520 <- predict(SteamSpyLMPositivePubOwn, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositivePubOwn71520)
+```
+
+```{r}
+SteamSpyLMNegativePubOwn71520 <- predict(SteamSpyLMNegativePubOwn, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativePubOwn71520)
+```
+
+```{r}
+SteamSpyLMPositivePriceDisc71520 <- predict(SteamSpyLMPositivePriceDisc, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositivePriceDisc71520)
+```
+
+```{r}
+SteamSpyLMNegativePriceDisc71520 <- predict(SteamSpyLMNegativePriceDisc, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativePriceDisc71520)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlay71520 <- predict(SteamSpyLMPositiveOwnPlay, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositiveOwnPlay71520)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlay71520 <- predict(SteamSpyLMNegativeOwnPlay, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativeOwnPlay71520)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlayPub71520 <- predict(SteamSpyLMPositiveOwnPlayPub, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositiveOwnPlayPub71520)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlayPub71520 <- predict(SteamSpyLMNegativeOwnPlayPub, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativeOwnPlayPub71520)
+```
+
+```{r}
+SteamSpyGLMPositive71520 <- predict(SteamSpyGLMPositive, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositive71520)
+```
+
+```{r}
+SteamSpyGLMPositivePubOwn71520 <- predict(SteamSpyGLMPositivePubOwn, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositivePubOwn71520)
+```
+
+```{r}
+SteamSpyGLMPositivePriceDisc71520 <- predict(SteamSpyGLMPositivePriceDisc, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositivePriceDisc71520)
+```
+
+```{r}
+SteamSpyGLMPositiveOwnPlay71520 <- predict(SteamSpyGLMPositiveOwnPlay, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositiveOwnPlay71520)
+```
+
+```{r}
+SteamSpyGLMNegativeOwnPlay71520 <- predict(SteamSpyGLMNegativeOwnPlay, newdata = `SteamSpy.Data.7.15.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMNegativeOwnPlay71520)
+```
+
+```{r}
+SteamSpyLMPositive71620 <- predict(SteamSpyLMPositive, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositive71620)
+```
+
+```{r}
+SteamSpyLMNegative71620 <- predict(SteamSpyLMNegative, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegative71620)
+```
+
+```{r}
+SteamSpyLMPositivePubOwn71620 <- predict(SteamSpyLMPositivePubOwn, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositivePubOwn71620)
+```
+
+```{r}
+SteamSpyLMNegativePubOwn71620 <- predict(SteamSpyLMNegativePubOwn, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativePubOwn71620)
+```
+
+```{r}
+SteamSpyLMPositivePriceDisc71620 <- predict(SteamSpyLMPositivePriceDisc, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositivePriceDisc71620)
+```
+
+```{r}
+SteamSpyLMNegativePriceDisc71620 <- predict(SteamSpyLMNegativePriceDisc, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativePriceDisc71620)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlay71620 <- predict(SteamSpyLMPositiveOwnPlay, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositiveOwnPlay71620)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlay71620 <- predict(SteamSpyLMNegativeOwnPlay, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativeOwnPlay71620)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlayPub71620 <- predict(SteamSpyLMPositiveOwnPlayPub, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositiveOwnPlayPub71620)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlayPub71620 <- predict(SteamSpyLMNegativeOwnPlayPub, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativeOwnPlayPub71620)
+```
+
+```{r}
+SteamSpyGLMPositive71620 <- predict(SteamSpyGLMPositive, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositive71620)
+```
+
+```{r}
+SteamSpyGLMPositivePubOwn71620 <- predict(SteamSpyGLMPositivePubOwn, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositivePubOwn71620)
+```
+
+```{r}
+SteamSpyGLMPositivePriceDisc71620 <- predict(SteamSpyGLMPositivePriceDisc, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositivePriceDisc71620)
+```
+
+```{r}
+SteamSpyGLMPositiveOwnPlay71620 <- predict(SteamSpyGLMPositiveOwnPlay, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositiveOwnPlay71620)
+```
+
+```{r}
+SteamSpyGLMNegativeOwnPlay71620 <- predict(SteamSpyGLMNegativeOwnPlay, newdata = `SteamSpy.Data.7.16.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMNegativeOwnPlay71620)
+```
+
+```{r}
+SteamSpyLMPositive71720 <- predict(SteamSpyLMPositive, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositive71720)
+```
+
+```{r}
+SteamSpyLMNegative71720 <- predict(SteamSpyLMNegative, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegative71720)
+```
+
+```{r}
+SteamSpyLMPositivePubOwn71720 <- predict(SteamSpyLMPositivePubOwn, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositivePubOwn71720)
+```
+
+```{r}
+SteamSpyLMNegativePubOwn71720 <- predict(SteamSpyLMNegativePubOwn, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativePubOwn71720)
+```
+
+```{r}
+SteamSpyLMPositivePriceDisc71720 <- predict(SteamSpyLMPositivePriceDisc, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositivePriceDisc71720)
+```
+
+```{r}
+SteamSpyLMNegativePriceDisc71720 <- predict(SteamSpyLMNegativePriceDisc, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativePriceDisc71720)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlay71720 <- predict(SteamSpyLMPositiveOwnPlay, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositiveOwnPlay71720)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlay71720 <- predict(SteamSpyLMNegativeOwnPlay, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativeOwnPlay71720)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlayPub71720 <- predict(SteamSpyLMPositiveOwnPlayPub, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositiveOwnPlayPub71720)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlayPub71720 <- predict(SteamSpyLMNegativeOwnPlayPub, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativeOwnPlayPub71720)
+```
+
+```{r}
+SteamSpyGLMPositive71720 <- predict(SteamSpyGLMPositive, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositive71720)
+```
+
+```{r}
+SteamSpyGLMPositivePubOwn71720 <- predict(SteamSpyGLMPositivePubOwn, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositivePubOwn71720)
+```
+
+```{r}
+SteamSpyGLMPositivePriceDisc71720 <- predict(SteamSpyGLMPositivePriceDisc, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositivePriceDisc71720)
+```
+
+```{r}
+SteamSpyGLMPositiveOwnPlay71720 <- predict(SteamSpyGLMPositiveOwnPlay, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositiveOwnPlay71720)
+```
+
+```{r}
+SteamSpyGLMNegativeOwnPlay71720 <- predict(SteamSpyGLMNegativeOwnPlay, newdata = `SteamSpy.Data.7.17.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMNegativeOwnPlay71720)
+```
+
+```{r}
+SteamSpyLMPositive71820 <- predict(SteamSpyLMPositive, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositive71820)
+```
+
+```{r}
+SteamSpyLMNegative71820 <- predict(SteamSpyLMNegative, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegative71820)
+```
+
+```{r}
+SteamSpyLMPositivePubOwn71820 <- predict(SteamSpyLMPositivePubOwn, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositivePubOwn71820)
+```
+
+```{r}
+SteamSpyLMNegativePubOwn71820 <- predict(SteamSpyLMNegativePubOwn, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativePubOwn71820)
+```
+
+```{r}
+SteamSpyLMPositivePriceDisc71820 <- predict(SteamSpyLMPositivePriceDisc, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositivePriceDisc71820)
+```
+
+```{r}
+SteamSpyLMNegativePriceDisc71820 <- predict(SteamSpyLMNegativePriceDisc, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativePriceDisc71820)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlay71820 <- predict(SteamSpyLMPositiveOwnPlay, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositiveOwnPlay71820)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlay71820 <- predict(SteamSpyLMNegativeOwnPlay, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativeOwnPlay71820)
+```
+
+```{r}
+SteamSpyLMPositiveOwnPlayPub71820 <- predict(SteamSpyLMPositiveOwnPlayPub, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMPositiveOwnPlayPub71820)
+```
+
+```{r}
+SteamSpyLMNegativeOwnPlayPub71820 <- predict(SteamSpyLMNegativeOwnPlayPub, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyLMNegativeOwnPlayPub71820)
+```
+
+```{r}
+SteamSpyGLMPositive71820 <- predict(SteamSpyGLMPositive, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositive71820)
+```
+
+```{r}
+SteamSpyGLMPositivePubOwn71820 <- predict(SteamSpyGLMPositivePubOwn, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositivePubOwn71820)
+```
+
+```{r}
+SteamSpyGLMPositivePriceDisc71820 <- predict(SteamSpyGLMPositivePriceDisc, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositivePriceDisc71820)
+```
+
+```{r}
+SteamSpyGLMPositiveOwnPlay71820 <- predict(SteamSpyGLMPositiveOwnPlay, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMPositiveOwnPlay71820)
+```
+
+```{r}
+SteamSpyGLMNegativeOwnPlay71820 <- predict(SteamSpyGLMNegativeOwnPlay, newdata = `SteamSpy.Data.7.18.20.(prepped)`, se.fit = TRUE, interval = "prediction", level = .95)
+head(SteamSpyGLMNegativeOwnPlay71820)
+```
+
+```{r}
+writeOutput1.F <- function(output.title, modelname) {
+  sink(file="model7220.txt", append=TRUE) #creates an empty file; if TRUE, it will append to the file
+  print("##########################", row.names=FALSE)
+  print(output.title, row.names=FALSE)
+  print("##########################",  row.names=FALSE)
+  summary(modelname) 
+}
+writeOutput2.F <- function(output.title, modelname) {
+  sink(file="model71320.txt", append=TRUE) #creates an empty file; if TRUE, it will append to the file
+  print("##########################", row.names=FALSE)
+  print(output.title, row.names=FALSE)
+  print("##########################",  row.names=FALSE)
+  print(modelname) 
+}
+```
+```{r}
+writeOutput3.F <- function(output.title, modelname) {
+  sink(file="model71420.txt", append=TRUE) #creates an empty file; if TRUE, it will append to the file
+  print("##########################", row.names=FALSE)
+  print(output.title, row.names=FALSE)
+  print("##########################",  row.names=FALSE)
+  print(modelname) 
+}
+writeOutput4.F <- function(output.title, modelname) {
+  sink(file="model71520.txt", append=TRUE) #creates an empty file; if TRUE, it will append to the file
+  print("##########################", row.names=FALSE)
+  print(output.title, row.names=FALSE)
+  print("##########################",  row.names=FALSE)
+  print(modelname) 
+}
+writeOutput5.F <- function(output.title, modelname) {
+  sink(file="model71620.txt", append=TRUE) #creates an empty file; if TRUE, it will append to the file
+  print("##########################", row.names=FALSE)
+  print(output.title, row.names=FALSE)
+  print("##########################",  row.names=FALSE)
+  print(modelname) 
+}
+writeOutput6.F <- function(output.title, modelname) {
+  sink(file="model71720.txt", append=TRUE) #creates an empty file; if TRUE, it will append to the file
+  print("##########################", row.names=FALSE)
+  print(output.title, row.names=FALSE)
+  print("##########################",  row.names=FALSE)
+  print(modelname) 
+}
+writeOutput7.F <- function(output.title, modelname) {
+  sink(file="model71820.txt", append=TRUE) #creates an empty file; if TRUE, it will append to the file
+  print("##########################", row.names=FALSE)
+  print(output.title, row.names=FALSE)
+  print("##########################",  row.names=FALSE)
+  print(modelname) 
+}
+```
+
+```{r}
+writeOutput1.F("SteamSpyLMPositive", SteamSpyLMPositive)
+writeOutput1.F("SteamSpyLMNegative", SteamSpyLMNegative)
+writeOutput1.F("SteamSpyLMPositivePubOwn", SteamSpyLMPositivePubOwn)
+writeOutput1.F("SteamSpyLMNegativePubOwn", SteamSpyLMNegativePubOwn)
+writeOutput1.F("SteamSpyLMPositivePriceDisc", SteamSpyLMPositivePriceDisc)
+writeOutput1.F("SteamSpyLMNegativePriceDisc", SteamSpyLMNegativePriceDisc)
+writeOutput1.F("SteamSpyLMPositiveOwnPlay", SteamSpyLMPositiveOwnPlay)
+writeOutput1.F("SteamSpyLMNegativeOwnPlay", SteamSpyLMNegativeOwnPlay)
+writeOutput1.F("SteamSpyLMPositiveOwnPlayPub", SteamSpyLMPositiveOwnPlayPub)
+writeOutput1.F("SteamSpyLMNegativeOwnPlayPub", SteamSpyLMNegativeOwnPlayPub)
+writeOutput1.F("SteamSpyGLMPositive", SteamSpyGLMPositive)
+writeOutput1.F("SteamSpyGLMPositivePubOwn", SteamSpyGLMPositivePubOwn)
+writeOutput1.F("SteamSpyGLMPositivePriceDisc", SteamSpyGLMPositivePriceDisc)
+writeOutput1.F("SteamSpyGLMPositiveOwnPlay", SteamSpyGLMPositiveOwnPlay)
+writeOutput1.F("SteamSpyGLMNegativeOwnPlay", SteamSpyGLMNegativeOwnPlay)
+writeOutput2.F("SteamSpyLMPositive71320", SteamSpyLMPositive71320)
+writeOutput2.F("SteamSpyLMNegative71320", SteamSpyLMNegative71320)
+writeOutput2.F("SteamSpyLMPositivePubOwn71320", SteamSpyLMPositivePubOwn71320)
+writeOutput2.F("SteamSpyLMNegativePubOwn71320", SteamSpyLMNegativePubOwn71320)
+writeOutput2.F("SteamSpyLMPositivePriceDisc71320", SteamSpyLMPositivePriceDisc71320)
+writeOutput2.F("SteamSpyLMNegativePriceDisc71320", SteamSpyLMNegativePriceDisc71320)
+writeOutput2.F("SteamSpyLMPositiveOwnPlay71320", SteamSpyLMPositiveOwnPlay71320)
+writeOutput2.F("SteamSpyLMNegativeOwnPlay71320", SteamSpyLMNegativeOwnPlay71320)
+writeOutput2.F("SteamSpyLMPositiveOwnPlayPub71320", SteamSpyLMPositiveOwnPlayPub71320)
+writeOutput2.F("SteamSpyLMNegativeOwnPlayPub71320", SteamSpyLMNegativeOwnPlayPub71320)
+writeOutput2.F("SteamSpyGLMPositive71320", SteamSpyGLMPositive71320)
+writeOutput2.F("SteamSpyGLMPositivePubOwn71320", SteamSpyGLMPositivePubOwn71320)
+writeOutput2.F("SteamSpyGLMPositivePriceDisc71320", SteamSpyGLMPositivePriceDisc71320)
+writeOutput2.F("SteamSpyGLMPositiveOwnPlay71320", SteamSpyGLMPositiveOwnPlay71320)
+writeOutput2.F("SteamSpyGLMNegativeOwnPlay71320", SteamSpyGLMNegativeOwnPlay71320)
+```
+``` {r}
+writeOutput3.F("SteamSpyLMPositive71420", SteamSpyLMPositive71420)
+writeOutput3.F("SteamSpyLMNegative71420", SteamSpyLMNegative71420)
+writeOutput3.F("SteamSpyLMPositivePubOwn71420", SteamSpyLMPositivePubOwn71420)
+writeOutput3.F("SteamSpyLMNegativePubOwn71420", SteamSpyLMNegativePubOwn71420)
+writeOutput3.F("SteamSpyLMPositivePriceDisc71420", SteamSpyLMPositivePriceDisc71420)
+writeOutput3.F("SteamSpyLMNegativePriceDisc71420", SteamSpyLMNegativePriceDisc71420)
+writeOutput3.F("SteamSpyLMPositiveOwnPlay71420", SteamSpyLMPositiveOwnPlay71420)
+writeOutput3.F("SteamSpyLMNegativeOwnPlay71420", SteamSpyLMNegativeOwnPlay71420)
+writeOutput3.F("SteamSpyLMPositiveOwnPlayPub71420", SteamSpyLMPositiveOwnPlayPub71420)
+writeOutput3.F("SteamSpyLMNegativeOwnPlayPub71420", SteamSpyLMNegativeOwnPlayPub71420)
+writeOutput3.F("SteamSpyGLMPositive71420", SteamSpyGLMPositive71420)
+writeOutput3.F("SteamSpyGLMPositivePubOwn71420", SteamSpyGLMPositivePubOwn71420)
+writeOutput3.F("SteamSpyGLMPositivePriceDisc71420", SteamSpyGLMPositivePriceDisc71420)
+writeOutput3.F("SteamSpyGLMPositiveOwnPlay71420", SteamSpyGLMPositiveOwnPlay71420)
+writeOutput3.F("SteamSpyGLMNegativeOwnPlay71420", SteamSpyGLMNegativeOwnPlay71420)
+writeOutput4.F("SteamSpyLMPositive71520", SteamSpyLMPositive71520)
+writeOutput4.F("SteamSpyLMNegative71520", SteamSpyLMNegative71520)
+writeOutput4.F("SteamSpyLMPositivePubOwn71520", SteamSpyLMPositivePubOwn71520)
+writeOutput4.F("SteamSpyLMNegativePubOwn71520", SteamSpyLMNegativePubOwn71520)
+writeOutput4.F("SteamSpyLMPositivePriceDisc71520", SteamSpyLMPositivePriceDisc71520)
+writeOutput4.F("SteamSpyLMNegativePriceDisc71520", SteamSpyLMNegativePriceDisc71520)
+writeOutput4.F("SteamSpyLMPositiveOwnPlay71520", SteamSpyLMPositiveOwnPlay71520)
+writeOutput4.F("SteamSpyLMNegativeOwnPlay71520", SteamSpyLMNegativeOwnPlay71520)
+writeOutput4.F("SteamSpyLMPositiveOwnPlayPub71520", SteamSpyLMPositiveOwnPlayPub71520)
+writeOutput4.F("SteamSpyLMNegativeOwnPlayPub71520", SteamSpyLMNegativeOwnPlayPub71520)
+writeOutput4.F("SteamSpyGLMPositive71520", SteamSpyGLMPositive71520)
+writeOutput4.F("SteamSpyGLMPositivePubOwn71520", SteamSpyGLMPositivePubOwn71520)
+writeOutput4.F("SteamSpyGLMPositivePriceDisc71520", SteamSpyGLMPositivePriceDisc71520)
+writeOutput4.F("SteamSpyGLMPositiveOwnPlay71520", SteamSpyGLMPositiveOwnPlay71520)
+writeOutput4.F("SteamSpyGLMNegativeOwnPlay71520", SteamSpyGLMNegativeOwnPlay71520)
+writeOutput5.F("SteamSpyLMPositive71620", SteamSpyLMPositive71620)
+writeOutput5.F("SteamSpyLMNegative71620", SteamSpyLMNegative71620)
+writeOutput5.F("SteamSpyLMPositivePubOwn71620", SteamSpyLMPositivePubOwn71620)
+writeOutput5.F("SteamSpyLMNegativePubOwn71620", SteamSpyLMNegativePubOwn71620)
+writeOutput5.F("SteamSpyLMPositivePriceDisc71620", SteamSpyLMPositivePriceDisc71620)
+writeOutput5.F("SteamSpyLMNegativePriceDisc71620", SteamSpyLMNegativePriceDisc71620)
+writeOutput5.F("SteamSpyLMPositiveOwnPlay71620", SteamSpyLMPositiveOwnPlay71620)
+writeOutput5.F("SteamSpyLMNegativeOwnPlay71620", SteamSpyLMNegativeOwnPlay71620)
+writeOutput5.F("SteamSpyLMPositiveOwnPlayPub71620", SteamSpyLMPositiveOwnPlayPub71620)
+writeOutput5.F("SteamSpyLMNegativeOwnPlayPub71620", SteamSpyLMNegativeOwnPlayPub71620)
+writeOutput5.F("SteamSpyGLMPositive71620", SteamSpyGLMPositive71620)
+writeOutput5.F("SteamSpyGLMPositivePubOwn71620", SteamSpyGLMPositivePubOwn71620)
+writeOutput5.F("SteamSpyGLMPositivePriceDisc71620", SteamSpyGLMPositivePriceDisc71620)
+writeOutput5.F("SteamSpyGLMPositiveOwnPlay71620", SteamSpyGLMPositiveOwnPlay71620)
+writeOutput5.F("SteamSpyGLMNegativeOwnPlay71620", SteamSpyGLMNegativeOwnPlay71620)
+writeOutput6.F("SteamSpyLMPositive71720", SteamSpyLMPositive71720)
+writeOutput6.F("SteamSpyLMNegative71720", SteamSpyLMNegative71720)
+writeOutput6.F("SteamSpyLMPositivePubOwn71720", SteamSpyLMPositivePubOwn71720)
+writeOutput6.F("SteamSpyLMNegativePubOwn71720", SteamSpyLMNegativePubOwn71720)
+writeOutput6.F("SteamSpyLMPositivePriceDisc71720", SteamSpyLMPositivePriceDisc71720)
+writeOutput6.F("SteamSpyLMNegativePriceDisc71720", SteamSpyLMNegativePriceDisc71720)
+writeOutput6.F("SteamSpyLMPositiveOwnPlay71720", SteamSpyLMPositiveOwnPlay71720)
+writeOutput6.F("SteamSpyLMNegativeOwnPlay71720", SteamSpyLMNegativeOwnPlay71720)
+writeOutput6.F("SteamSpyLMPositiveOwnPlayPub71720", SteamSpyLMPositiveOwnPlayPub71720)
+writeOutput6.F("SteamSpyLMNegativeOwnPlayPub71720", SteamSpyLMNegativeOwnPlayPub71720)
+writeOutput6.F("SteamSpyGLMPositive71720", SteamSpyGLMPositive71720)
+writeOutput6.F("SteamSpyGLMPositivePubOwn71720", SteamSpyGLMPositivePubOwn71720)
+writeOutput6.F("SteamSpyGLMPositivePriceDisc71720", SteamSpyGLMPositivePriceDisc71720)
+writeOutput6.F("SteamSpyGLMPositiveOwnPlay71720", SteamSpyGLMPositiveOwnPlay71720)
+writeOutput6.F("SteamSpyGLMNegativeOwnPlay71720", SteamSpyGLMNegativeOwnPlay71720)
+writeOutput7.F("SteamSpyLMPositive71820", SteamSpyLMPositive71820)
+writeOutput7.F("SteamSpyLMNegative71820", SteamSpyLMNegative71820)
+writeOutput7.F("SteamSpyLMPositivePubOwn71820", SteamSpyLMPositivePubOwn71820)
+writeOutput7.F("SteamSpyLMNegativePubOwn71820", SteamSpyLMNegativePubOwn71820)
+writeOutput7.F("SteamSpyLMPositivePriceDisc71820", SteamSpyLMPositivePriceDisc71820)
+writeOutput7.F("SteamSpyLMNegativePriceDisc71820", SteamSpyLMNegativePriceDisc71820)
+writeOutput7.F("SteamSpyLMPositiveOwnPlay71820", SteamSpyLMPositiveOwnPlay71820)
+writeOutput7.F("SteamSpyLMNegativeOwnPlay71820", SteamSpyLMNegativeOwnPlay71820)
+writeOutput7.F("SteamSpyLMPositiveOwnPlayPub71820", SteamSpyLMPositiveOwnPlayPub71820)
+writeOutput7.F("SteamSpyLMNegativeOwnPlayPub71820", SteamSpyLMNegativeOwnPlayPub71820)
+writeOutput7.F("SteamSpyGLMPositive71820", SteamSpyGLMPositive71820)
+writeOutput7.F("SteamSpyGLMPositivePubOwn71820", SteamSpyGLMPositivePubOwn71820)
+writeOutput7.F("SteamSpyGLMPositivePriceDisc71820", SteamSpyGLMPositivePriceDisc71820)
+writeOutput7.F("SteamSpyGLMPositiveOwnPlay71820", SteamSpyGLMPositiveOwnPlay71820)
+writeOutput7.F("SteamSpyGLMNegativeOwnPlay71820", SteamSpyGLMNegativeOwnPlay71820)
+```
+
+```{r}
+ggplot(SteamSpyLMPositive, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyLMNegative, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyLMPositivePubOwn, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyLMNegativePubOwn, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyLMPositivePriceDisc, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyLMNegativePriceDisc, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyLMPositiveOwnPlay, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyLMNegativeOwnPlay, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyLMPositiveOwnPlayPub, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyLMNegativeOwnPlayPub, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyGLMPositive, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyGLMPositivePubOwn, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyGLMPositivePriceDisc, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyGLMPositiveOwnPlay, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
+```{r}
+ggplot(SteamSpyGLMNegativeOwnPlay, aes(sample=.stdresid)) + stat_qq() + geom_abline()
+```
+
